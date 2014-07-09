@@ -25,7 +25,7 @@
 @function isolate(
   $isolate: 1
 ) {
-  $isolate: parse-span($isolate);
+  $isolate: if(type-of($isolate) == map, $isolate, parse-span($isolate));
   $isolation: susy-get(span, $isolate);
 
   @if $isolation and not get-location($isolate) {

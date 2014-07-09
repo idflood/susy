@@ -8,7 +8,8 @@
 @mixin prefix(
   $span
 ) {
-  $span   : map-merge((spread: wide), parse-span($span));
+  $span   : if(type-of($span) == map, $span, parse-span($span));
+  $span   : map-merge((spread: wide), $span);
   $flow   : susy-get(flow, $span);
   $width  : span($span);
 
@@ -27,7 +28,8 @@
 @mixin suffix(
   $span
 ) {
-  $span   : map-merge((spread: wide), parse-span($span));
+  $span   : if(type-of($span) == map, $span, parse-span($span));
+  $span   : map-merge((spread: wide), $span);
   $flow   : susy-get(flow, $span);
   $width  : span($span);
 
@@ -48,10 +50,12 @@
   $pre,
   $post: false
 ) {
-  $pre: map-merge((spread: wide), parse-span($pre));
+  $pre: if(type-of($pre) == map, $pre, parse-span($pre));
+  $pre: map-merge((spread: wide), $pre);
 
   @if $post {
-    $post: map-merge((spread: wide), parse-span($post));
+    $post: if(type-of($post) == map, $post, parse-span($post));
+    $post: map-merge((spread: wide), $post);
   } @else {
     $span: susy-get(span, $pre);
     @if length($span) > 1 {

@@ -25,7 +25,7 @@
 @mixin bleed-x(
   $bleed: gutter()
 ) {
-  $bleed  : parse-span($bleed);
+  $bleed  : if(type-of($bleed) == map, $bleed, parse-span($bleed));
   $trbl   : susy-get(span, $bleed);
 
   @if length($trbl) == 1 {
@@ -47,7 +47,7 @@
 @mixin bleed-y(
   $bleed: if(function-exists(rhythm), rhythm(1), 1em)
 ) {
-  $bleed  : parse-span($bleed);
+  $bleed  : if(type-of($bleed) == map, $bleed, parse-span($bleed));
   $trbl   : susy-get(span, $bleed);
 
   @if length($trbl) == 1 {
@@ -69,7 +69,8 @@
 @function get-bleed(
   $bleed
 ) {
-  $bleed    : map-merge((spread: wide), parse-span($bleed));
+  $bleed    : if(type-of($bleed) == map, $bleed, parse-span($bleed));
+  $bleed    : map-merge((spread: wide), $bleed);
   $trbl     : susy-get(span, $bleed);
   $short    : null;
   $output   : ();

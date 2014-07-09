@@ -8,7 +8,7 @@
 @function nested(
   $context
 ) {
-  $context    : parse-span($context);
+  $context    : if(type-of($context) == map, $context, parse-span($context));
   $span       : susy-get(span, $context);
   $location   : get-location($context);
   $columns    : susy-get(columns, $context);
@@ -24,7 +24,7 @@
 @mixin nested(
   $context
 ) {
-  $context  : parse-span($context);
+  $context  : if(type-of($context) == map, $context, parse-span($context));
   $old      : susy-get(columns);
   $susy     : map-merge($susy, (columns: nested($context))) !global;
 

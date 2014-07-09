@@ -8,7 +8,7 @@
 @mixin container(
   $layout: $susy
 ) {
-  $layout     : parse-grid($layout);
+  $layout     : if(type-of($layout) == map, $layout, parse-grid($layout));
 
   $_width     : get-container-width($layout);
   $_justify   : parse-container-position(susy-get(container-position, $layout));
@@ -31,7 +31,7 @@
 @function container(
   $layout: $susy
 ) {
-  $layout: parse-grid($layout);
+  $layout: if(type-of($layout) == map, $layout, parse-grid($layout));
   @return get-container-width($layout);
 }
 
@@ -42,7 +42,7 @@
 @function get-container-width(
   $layout: $susy
 ) {
-  $layout         : parse-grid($layout);
+  $layout         : if(type-of($layout) == map, $layout, parse-grid($layout));
   $_width         : susy-get(container, $layout);
   $_column-width  : susy-get(column-width, $layout);
   $_math          : susy-get(math, $layout);

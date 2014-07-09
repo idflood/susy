@@ -34,7 +34,7 @@
 @mixin first(
   $context: $susy
 ) {
-  $context: parse-grid($context);
+  $context: if(type-of($context) == map, $context, parse-grid($context));
   $flow: susy-get(flow, $context);
 
   @if not is-split($context) {
@@ -55,7 +55,7 @@
 @mixin last(
   $context: $susy
 ) {
-  $context: parse-grid($context);
+  $context: if(type-of($context) == map, $context, parse-grid($context));
   $output: (
     flow: susy-get(flow, $context),
     margin: if(is-split($context), null, 0),
@@ -77,7 +77,7 @@
 @function get-edge(
   $span
 ) {
-  $span       : parse-span($span);
+  $span       : if(type-of($span) == map, $span, parse-span($span));
   $edge       : susy-get(edge, $span);
 
   @if not $edge {
@@ -113,7 +113,7 @@
 @function get-location(
   $span
 ) {
-  $span       : parse-span($span);
+  $span       : if(type-of($span) == map, $span, parse-span($span));
   $location   : susy-get(location, $span);
   $edge       : get-edge($span);
   $n          : susy-get(span, $span);

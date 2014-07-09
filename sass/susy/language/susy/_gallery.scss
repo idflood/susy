@@ -10,7 +10,7 @@
   $span,
   $selector: child
 ) {
-  $span       : parse-span($span);
+  $span       : if(type-of($span) == map, $span, parse-span($span));
   $span       : map-merge($span, (location: 1));
 
   $n            : susy-get(span, $span);
