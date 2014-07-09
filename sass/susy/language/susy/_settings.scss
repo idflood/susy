@@ -49,8 +49,10 @@ $susy-keywords: (
 ) {
   $_return: ();
 
-  @if type-of($short) == map {
-    $_return: $short;
+  @if not $short {
+    @return $_return;
+  } @else if type-of($short) == map {
+    @return $short;
   } @else {
     @each $item in $short {
       // strings
@@ -98,9 +100,7 @@ $susy-keywords: (
   }
 
   $_return: map-merge($_return, $_columns);
-  $_return: map-merge($_return, $_gutters);
-
-  @return $_return;
+  @return map-merge($_return, $_gutters);
 }
 
 
@@ -109,12 +109,13 @@ $susy-keywords: (
 @function parse-grid(
   $short: $susy
 ) {
-  $_return: parse-settings($short);
+  $_return: null;
   $_layout: ();
 
   @if type-of($short) == map {
-    $_return: $short;
+    @return $short;
   } @else {
+    $_return: parse-settings($short);
     @each $item in $short {
       // number or list
       @if type-of($item) == number or type-of($item) == list {
@@ -142,7 +143,7 @@ $susy-keywords: (
   $_return: ();
 
   @if type-of($short) == map {
-    $_return: $short;
+    @return $short;
   } @else {
     $_at: index($short, at);
 
