@@ -52,7 +52,6 @@ $susy: () !default;
 ) {
   $layout: if(type-of($layout) == map, $layout, parse-grid($layout));
   $_options: $layout $susy $susy-defaults;
-  $_return: null;
 
   @each $opt in $_options {
     @if type-of($opt) == map {
@@ -62,5 +61,5 @@ $susy: () !default;
     }
   }
 
-  @return $_return;
+  @return null;
 }
