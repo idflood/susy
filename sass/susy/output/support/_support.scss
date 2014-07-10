@@ -21,7 +21,8 @@
 // - $val   : <css value>
 @mixin susy-support(
   $prop,
-  $val
+  $val,
+  $rem_support: null
 ) {
   @if $val != null {
     // Simple properties without size
@@ -43,6 +44,11 @@
     // Box-Sizing Support
     @else if $prop == box-sizing {
       @include susy-box-sizing($val);
+    }
+
+    // Without rem
+    @else if $rem_support != true {
+      #{$prop}: $val;
     }
 
     // Rem Support
