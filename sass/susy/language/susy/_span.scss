@@ -23,7 +23,10 @@
     @include nobreak;
   }
 
-  @include output((box-sizing: $box));
+  @if $box != null {
+    @include output((box-sizing: $box));
+  }
+
   @include float-span-output($output...);
 
   @if valid-columns($nesting, silent) {

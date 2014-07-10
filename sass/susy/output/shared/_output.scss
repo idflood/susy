@@ -9,6 +9,8 @@
   $styles
 ) {
   @each $prop, $val in $styles {
-    @include susy-support($prop, $val);
+    @if $val != null {
+      @include susy-support($prop, $val);
+    }
   }
 }
