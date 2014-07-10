@@ -97,6 +97,9 @@
   $map,
   $keys...
 ) {
+  @if length($keys) == 1 {
+    @return map-has-key($map, nth($keys, 1));
+  }
   $_return: null;
 
   @each $key in $keys {
