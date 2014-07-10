@@ -112,7 +112,9 @@ $susy-keywords: (
   $_return: null;
   $_layout: ();
 
-  @if type-of($short) == map {
+  @if not $short {
+    @return $_layout;
+  } @else if type-of($short) == map {
     @return $short;
   } @else {
     $_return: parse-settings($short);
