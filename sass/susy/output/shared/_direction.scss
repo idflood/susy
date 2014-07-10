@@ -17,8 +17,15 @@
   $flow: map-get($susy-defaults, flow),
   $key: from
 ) {
-  $return: if($flow == rtl, (from: right, to: left), (from: left, to: right));
-  @return map-get($return, $key);
+  @if $flow != rtl and $key == from {
+    @return left;
+  } @else if $flow != rtl and $key == to {
+    @return right;
+  } @else if $flow == rtl and $key == from {
+    @return right;
+  } @else {
+    @return left;
+  }
 }
 
 // To
