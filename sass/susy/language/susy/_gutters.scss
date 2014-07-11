@@ -64,7 +64,11 @@
   $_gutters : susy-get(gutters, $context);
   $_gutter  : susy-get(gutter-override, $context);
 
-  @if $_gutters and ($_gutters > 0) and not $_gutter {
+  @if not $_gutters or $_gutters <= 0 {
+    @return $_gutter;
+  }
+
+  @if not $_gutter {
     $_column-width: susy-get(column-width, $context);
     $_math: gutter-math($context);
     @if $_math == static {
@@ -88,16 +92,14 @@
   $context: $susy
 ) {
   $context            : parse-gutters($context);
-
-  $_gutter-position   : susy-get(gutter-position, $context);
   $_gutter            : get-gutter-width($context);
-
   $_return            : (before: null, after: null);
 
   @if is-split($context) and $_gutter {
     $_gutter: $_gutter / 2;
     @return map-merge($_return, (before: $_gutter, after: $_gutter));
   } @else {
+    $_gutter-position: susy-get(gutter-position, $context);
     @return map-merge($_return, ($_gutter-position: $_gutter));
   }
 }
@@ -110,10 +112,11 @@
 @function is-inside(
   $context
 ) {
-  $_inside: inside inside-static;
   $_gutter-position: susy-get(gutter-position, $context);
-
-  @return if(index($_inside, $_gutter-position), true, false);
+  @if $_gutter-position == inside or $_gutter-position == inside-static {
+    @return true;
+  }
+  @return false;
 }
 
 
@@ -124,10 +127,11 @@
 @function is-split(
   $context
 ) {
-  $_split: split inside inside-static;
   $_gutter-position: susy-get(gutter-position, $context);
-
-  @return if(index($_split, $_gutter-position), true, false);
+  @if $_gutter-position == split or $_gutter-position == inside or $_gutter-position == inside-static {
+    @return true;
+  }
+  @return false;
 }
 
 
@@ -138,6 +142,8 @@
 @function gutter-math(
   $context: $susy
 ) {
-  $_return: susy-get(math, $context);
-  @return if(susy-get(gutter-position, $context) == inside-static, static, $_return);
+  @if susy-get(gutter-position, $context) == inside-static {
+    @return static;
+  }
+  @return susy-get(math, $context);
 }
