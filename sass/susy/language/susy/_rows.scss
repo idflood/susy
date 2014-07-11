@@ -77,30 +77,33 @@
 @function get-edge(
   $span
 ) {
-  $span       : if(type-of($span) == map, $span, parse-span($span));
   $edge       : susy-get(edge, $span);
 
   @if not $edge {
+    $span: if(type-of($span) == map, $span, parse-span($span));
     $count: susy-count(susy-get(columns, $span));
-    $location: susy-get(location, $span);
     $n: susy-get(span, $span);
-
-    $number: if(type-of($location) == number, true, false);
-    $index: if($number and unitless($location), true, false);
-
     @if $n == $count {
-      $edge: full;
-    } @else if $location and $n and $index {
-      @if $location == 1 {
-        $edge: if($n == $count, full, first);
-      } @else if $location + $n - 1 == $count {
-        $edge: last;
+      @return full;
+    }
+
+    $location: susy-get(location, $span);
+
+    @if $location and $n {
+      $number: if(type-of($location) == number, true, false);
+      $index: if($number and unitless($location), true, false);
+      @if $index {
+        @if $location == 1 {
+          @return if($n == $count, full, first);
+        } @else if $location + $n - 1 == $count {
+          @return last;
+        }
       }
     }
   }
 
   @if $edge == alpha or $edge == omega {
-    $edge: if($edge == alpha, first, last);
+    @return if($edge == alpha, first, last);
   }
 
   @return $edge;
