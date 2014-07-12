@@ -54,7 +54,7 @@
   $span
 ) {
   $nest             : if(susy-get(role, $span) == nest, true, false);
-  $split-nest       : if(is-split($span) and $nest, true, false);
+  $split-nest       : if($nest and is-split($span), true, false);
   $edge             : get-edge($span);
   $location         : get-location($span);
 
@@ -84,7 +84,7 @@
   }
 
   // special margin handling
-  @if susy-get(output, $span) == isolate and $location {
+  @if $location and susy-get(output, $span) == isolate {
     $margin-before: get-isolation($span);
     $margin-after: -100%;
   } @else if $edge {
@@ -132,10 +132,6 @@
   $gutters  : susy-get(gutters, $span);
   $spread   : susy-get(spread, $span);
 
-  $context  : null;
-  $span-sum : null;
-  $width    : null;
-
   @if $n == 'full' {
     $pos: susy-get(gutter-position, $span);
     $role: susy-get(role, $span);
@@ -151,8 +147,8 @@
     $span-sum: susy($n, $location, $columns, $gutters, $spread);
 
     $_math: susy-get(math, $span);
-    $_column-width: susy-get(column-width, $span);
     @if $_math == static {
+      $_column-width: susy-get(column-width, $span);
       @return $span-sum * valid-column-math($_math, $_column-width);
     } @else {
       @return percentage($span-sum / $context);
