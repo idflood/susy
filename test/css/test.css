@@ -307,9 +307,9 @@
   margin-right: 5%;
 }
 .test__span .assert__default .test .inner {
-  width: 35.71429%;
+  width: 25%;
   float: left;
-  margin-right: 7.14286%;
+  margin-right: 5%;
 }
 .test__span .assert__default .expect {
   -moz-box-sizing: content-box;

@@ -12,6 +12,7 @@
   $output: span-math($span);
   $nesting: susy-get(span, $span);
   $clear: susy-get(clear, $span);
+  $role: susy-get(role, $span);
 
   $box: susy-get(box-sizing, $span);
   $content-box: if(susy-get(global-box-sizing) != 'border-box', true, false);
@@ -29,7 +30,7 @@
 
   @include float-span-output($output...);
 
-  @if valid-columns($nesting, silent) {
+  @if $role == nest and valid-columns($nesting, silent) {
     @include nested($span) { @content; }
   } @else {
     @content;

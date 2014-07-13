@@ -94,13 +94,13 @@
     $susy: (columns: 12) !global;
 
     %span-content-test {
-      @include span(8 of 12) {
+      @include span(8 of 12 nest) {
         $test: susy-get(columns);
         $expect: 8;
         @include assert-equal($test, $expect,
           'Span @content should use nested context');
 
-        @include span(3 of 8) {
+        @include span(3 of 8 nest) {
           $nest-test: susy-get(columns);
           $nest-expect: 3;
           @include assert-equal($nest-test, $nest-expect,
