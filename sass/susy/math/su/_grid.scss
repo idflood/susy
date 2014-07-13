@@ -21,7 +21,6 @@
 @function susy-count(
   $columns: map-get($susy-defaults, columns)
 ) {
-  $columns: valid-columns($columns);
   @return is-symmetrical($columns) or length($columns);
 }
 
@@ -44,7 +43,6 @@
   $gutters  : map-get($susy-defaults, gutters),
   $spread   : false
 ) {
-  $columns: valid-columns($columns);
   $gutters: valid-gutters($gutters);
 
   $spread: if($spread == wide, 0, if($spread == wider, 1, -1));
@@ -81,7 +79,6 @@
   $location,
   $columns: map-get($susy-defaults, columns)
 ) {
-  $columns: valid-columns($columns);
   $sub-columns: $span;
 
   @if not is-symmetrical($columns) {
@@ -120,8 +117,6 @@
   $gutters      : map-get($susy-defaults, gutters),
   $spread       : false
 ) {
-  $columns: valid-columns($columns);
-  $gutters: valid-gutters($gutters);
   $span: susy-slice($span, $location, $columns);
 
   @return susy-sum($span, $gutters, $spread);
