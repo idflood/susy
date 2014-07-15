@@ -114,10 +114,11 @@
 // ------------
 // Calculate location value based on edge, if possible
 @function get-location(
-  $span
+  $span,
+  $edge: null
 ) {
   $span       : if(type-of($span) == map, $span, parse-span($span));
-  $edge       : get-edge($span);
+  $edge       : if($edge != null, $edge, get-edge($span));
   $location   : susy-get(location, $span);
 
   @if not $edge or $location {
