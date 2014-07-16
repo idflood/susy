@@ -112,6 +112,9 @@
 @function is-inside(
   $context
 ) {
+  @if type-of($context) == map and map-has-key($context, is-inside) {
+    @return map-get($context, is-inside);
+  }
   $_gutter-position: susy-get(gutter-position, $context);
   @if $_gutter-position == inside or $_gutter-position == inside-static {
     @return true;
@@ -127,6 +130,9 @@
 @function is-split(
   $context
 ) {
+  @if type-of($context) == map and map-has-key($context, is-split) {
+    @return map-get($context, is-split);
+  }
   $_gutter-position: susy-get(gutter-position, $context);
   @if $_gutter-position == split or $_gutter-position == inside or $_gutter-position == inside-static {
     @return true;
