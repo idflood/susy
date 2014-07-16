@@ -81,7 +81,8 @@
   $span
 ) {
   $nest             : if(susy-get(role, $span) == nest, true, false);
-  $split-nest       : if($nest and is-split($span), true, false);
+  $is-split         : is-split($span);
+  $split-nest       : if($nest and $is-split, true, false);
   $edge             : get-edge($span);
   $location         : get-location($span);
 
@@ -115,7 +116,6 @@
     $margin-before: get-isolation($span);
     $margin-after: -100%;
   } @else if $edge {
-    $is-split: is-split($span);
     $pos: susy-get(gutter-position, $span);
 
     @if $edge == last {
