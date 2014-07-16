@@ -51,14 +51,14 @@ $susy: () !default;
   $layout: map-merge($susy-defaults, $susy)
 ) {
   $layout: if(type-of($layout) == map, $layout, parse-grid($layout));
-  $_options: $layout $susy $susy-defaults;
-
-  @each $opt in $_options {
-    @if type-of($opt) == map {
-      @if _susy-deep-has-key($opt, $key...) {
-        @return _susy-deep-get($opt, $key...);
-      }
-    }
+  @if _susy-deep-has-key($layout, $key...) {
+    @return _susy-deep-get($layout, $key...);
+  }
+  @else if _susy-deep-has-key($susy, $key...) {
+    @return _susy-deep-get($susy, $key...);
+  }
+  @else if _susy-deep-has-key($susy-defaults, $key...) {
+    @return _susy-deep-get($susy-defaults, $key...);
   }
 
   @return null;
