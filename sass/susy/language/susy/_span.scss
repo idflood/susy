@@ -9,6 +9,7 @@
   $span
 ) {
   $span: if(type-of($span) == map, $span, parse-span($span));
+  $span: map-merge($span, process-span($span));
   $output: span-math($span);
   $nesting: susy-get(span, $span);
   $clear: susy-get(clear, $span);
@@ -34,6 +35,32 @@
   } @else {
     @content;
   }
+}
+
+@function process-span($span) {
+  @if not map-has-key($span, gutter-position) {
+    $span: map-merge($span, (gutter-position: susy-get(gutter-position, $span)));
+  }
+  @if not map-has-key($span, gutter-override) {
+    $span: map-merge($span, (gutter-override: susy-get(gutter-override, $span)));
+  }
+  @if not map-has-key($span, get-edge) {
+    $span: map-merge($span, (get-edge: get-edge($span)));
+  }
+  @if not map-has-key($span, columns) {
+    $span: map-merge($span, (columns: susy-get(columns, $span)));
+  }
+  @if not map-has-key($span, get-location) {
+    $span: map-merge($span, (get-location: get-location($span)));
+  }
+  @if not map-has-key($span, is-inside) {
+    $span: map-merge($span, (is-inside: is-inside($span)));
+  }
+  @if not map-has-key($span, is-split) {
+    $span: map-merge($span, (is-split: is-split($span)));
+  }
+
+  @return $span;
 }
 
 // Span [function]
